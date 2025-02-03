@@ -5,27 +5,51 @@ if K > C * R:
     print(0)
     exit()
 
-dx = [0, 1, 0, -1]  
-dy = [1, 0, -1, 0]  
 
-x, y = 1, 0  
-direction = 0  
-count = 0  
+left = 1      
+right = C     
+bottom = 1    
+top = R       
 
-seats = [[0] * (R + 1) for _ in range(C + 1)]
+count = 0            
+result = (0, 0)       
 
+while True:
+    for y in range(bottom, top + 1):
+        count += 1
+        if count == K:
+            result = (left, y)
+            break
+    if count == K:
+        break
+    left += 1  
 
-while count < K:
+    for x in range(left, right + 1):
+        count += 1
+        if count == K:
+            result = (x, top)
+            break
+    if count == K:
+        break
+    top -= 1  
 
-    next_x = x + dx[direction]
-    next_y = y + dy[direction]
     
+    for y in range(top, bottom - 1, -1):
+        count += 1
+        if count == K:
+            result = (right, y)
+            break
+    if count == K:
+        break
+    right -= 1  
 
-    if (1 <= next_x <= C and 1 <= next_y <= R and seats[next_x][next_y] == 0):
-        x, y = next_x, next_y  
-        count += 1  
-        seats[x][y] = count  
-    else:
-        direction = (direction + 1) % 4 
+    for x in range(right, left - 1, -1):
+        count += 1
+        if count == K:
+            result = (x, bottom)
+            break
+    if count == K:
+        break
+    bottom += 1  
 
-print(x, y)
+print(result[0], result[1])   

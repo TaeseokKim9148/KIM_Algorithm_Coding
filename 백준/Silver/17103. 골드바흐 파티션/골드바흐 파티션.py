@@ -17,8 +17,8 @@ T = int(input())
 for _ in range(T):
     n = int(input())
     count = 0
-    for i in range(2, n//2 + 1):
-        if prime_check[i] and prime_check[n-i]:
+    # 2부터 n//2까지 i를 순회하면서 i와 n-i 두 수가 모두 소수이면 count를 1씩 증가
+    for i in range(2, n // 2 + 1):
+        if prime_check[i] and prime_check[n - i]:
             count += 1
-    
     print(count)

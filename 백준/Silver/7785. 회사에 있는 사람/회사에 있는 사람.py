@@ -1,4 +1,7 @@
-n = int(input())
+import sys
+input = sys.stdin.readline
+
+n = int(input().strip())
 company = set()  
 
 for _ in range(n):
@@ -14,4 +17,4 @@ for _ in range(n):
 
 result = sorted(company, reverse=True)
 for name in result:
-    print(name)     
+    print(name)    

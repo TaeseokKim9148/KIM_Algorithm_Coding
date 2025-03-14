@@ -1,6 +1,3 @@
-import sys
-input = sys.stdin.readline
-
 def back_tracking(idx, temp):
     if len(temp) == M:
         if not tuple(temp) in result:

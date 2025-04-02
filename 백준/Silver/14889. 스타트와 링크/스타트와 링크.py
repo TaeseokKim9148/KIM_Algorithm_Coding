@@ -1,44 +1,45 @@
-import sys
-input = sys.stdin.readline
+def calculate_team_stat(team, stats):
+    team_stat = 0
+    for i in range(len(team)):
+        for j in range(len(team)):
+            if i != j:
+                team_stat += stats[team[i]][team[j]]
+    return team_stat
 
 N = int(input())
-S = []
+stats = []
 for _ in range(N):
-    S.append(list(map(int, input().split())))
+    stats.append(list(map(int, input().split())))
 
-start_team = [False] * N
-min_diff = float('inf')  
+min_diff = 10000  
 
-def calculate_diff():
-    start_ability = 0
-    link_ability = 0
-    
-    for i in range(N):
-        for j in range(N):
-            if start_team[i] and start_team[j]:
-                start_ability += S[i][j]
-            elif not start_team[i] and not start_team[j]:
-                link_ability += S[i][j]
-    
-    return abs(start_ability - link_ability)
-
-def backtracking(idx, count):
+def check_teams(team, index):
     global min_diff
     
-    if count == N//2:
-        diff = calculate_diff()
-        min_diff = min(min_diff, diff)
+    if len(team) == N // 2:
+        start_team = team
+        link_team = [i for i in range(N) if i not in start_team]
+        
+        start_stat = calculate_team_stat(start_team, stats)
+        link_stat = calculate_team_stat(link_team, stats)
+        
+        diff = start_stat - link_stat
+        if diff < 0:
+            diff = -diff
+        
+        if diff < min_diff:
+            min_diff = diff
         return
-    
-    if idx == N:
+
+    if index == N:
         return
-    
-    start_team[idx] = True
-    backtracking(idx + 1, count + 1)
-    
-    start_team[idx] = False
-    backtracking(idx + 1, count)
+        
+    check_teams(team + [index], index + 1)
 
-backtracking(0, 0)
+    check_teams(team, index + 1)
 
-print(min_diff) 
+
+check_teams([], 0)
+
+
+print(min_diff)
